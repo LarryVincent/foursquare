@@ -1,0 +1,28 @@
+---
+title: "Foursquare Data"
+output: html_notebook
+---
+
+This is an analysis of Larry's Foursquare data.
+
+```{r}
+library(tidyverse)
+library(jsonlite)
+library(janitor)
+library(here)
+
+# Load in data
+df <- read_json(here("Data/checkins.json"))
+df.checks <- df$items
+
+
+dfp %>% count(value, sort = TRUE) %>% 
+  filter(n > 25) %>% 
+  ggplot(aes(fct_reorder(value, n), n)) + 
+  geom_bar(stat = "identity") + 
+  geom_text(aes(label = n), nudge_y = -15, color = "white") + 
+  theme(axis.text.x = element_text(size = 8, angle = 90)) + 
+  coord_flip() + 
+  labs(x="Venue", y="Check-Ins")
+```
+
